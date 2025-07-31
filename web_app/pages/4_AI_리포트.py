@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-AI 요약 리포트 페이지 (모바일 최적화 버전)
+AI 요약 리포트 페이지 (모바일 최적화 버전) - 원래 UI 유지
 """
 import streamlit as st
-# import sys
-# import os
 from datetime import datetime
 from streamlit_extras.switch_page_button import switch_page
-
-# utils 모듈 import를 위한 경로 추가
-# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.news_analyzer import get_day6_news_summary
 from utils.sns_analyzer import get_day6_sns_analysis
@@ -73,9 +68,9 @@ def load_news_analysis(investor_type):
 
 
 @st.cache_data(ttl=3600)
-def load_sns_analysis(investor_type):  # ← 파라미터 추가
+def load_sns_analysis(investor_type):
     news_context = "데이식스 팬미팅에서 과도한 본인확인 절차로 인한 팬들의 반발"
-    return get_day6_sns_analysis(news_context, investor_type)  # ← 파라미터 전달
+    return get_day6_sns_analysis(news_context, investor_type)
 
 
 @st.cache_data(ttl=3600)
@@ -161,36 +156,19 @@ def show_news_section(investor_type):
         with col1:
             st.markdown(f"**📅 {news_result['date']}**")
         with col2:
-            st.markdown(
-                f'<a href="{news_result["url"]}" target="_blank" style="background-color:#007bff; color:white; padding:5px 15px; border-radius:20px; text-decoration:none; font-size:12px;">📄 원문보기</a>',
-                unsafe_allow_html=True)
+            if news_result.get('url') and news_result['url'] != '#':
+                st.markdown(
+                    f'<a href="{news_result["url"]}" target="_blank" style="background-color:#007bff; color:white; padding:5px 15px; border-radius:20px; text-decoration:none; font-size:12px;">📄 원문보기</a>',
+                    unsafe_allow_html=True)
 
         # AI 요약 (문장 형식)
         st.markdown("### 📋 AI 요약")
         # 숫자 정렬 제거하고 문장으로 연결
-        summary_text = news_result['summary'].replace('1. ', '').replace('2. ', '').replace('3. ', '').replace('4. ',
-                                                                                                               '').replace(
-            '5. ', '').replace('6. ', '').replace('7. ', '').replace('8. ', '')
+        summary_text = news_result['summary'].replace('1. ', '').replace('2. ', '').replace('3. ', '').replace('4. ', '').replace('5. ', '').replace('6. ', '').replace('7. ', '').replace('8. ', '')
         st.markdown(summary_text)
 
     else:
         st.error("뉴스 요약을 불러올 수 없습니다.")
-        # 임시 요약 제공
-        st.markdown("**📰 데이식스 팬미팅 본인확인 논란**")
-        st.markdown("**📅 2025-07-18**")
-        st.markdown(
-            '<a href="#" style="background-color:#007bff; color:white; padding:5px 15px; border-radius:20px; text-decoration:none; font-size:12px;">📄 원문보기</a>',
-            unsafe_allow_html=True)
-
-        st.markdown("### 📋 AI 요약")
-        if investor_type == "MIRAE":
-            st.markdown("""
-            데이식스 팬미팅에서 암표 방지를 위한 과도한 본인확인 절차가 논란이 되고 있습니다. 운영 업체는 생활기록부, 금융인증서 등의 서류 제출을 요구했으며, 이에 팬들이 강하게 반발했습니다. 개인정보 보호법 위반 소지가 있다는 법적 논란도 제기되고 있습니다. 업계에서는 이러한 과도한 요구가 팬덤 문화에 부정적 영향을 미칠 수 있다고 우려하고 있으며, 향후 팬미팅 운영 방식의 전반적 재검토가 필요할 것으로 보입니다. 이번 사건은 아티스트와 팬 간의 신뢰 관계에도 영향을 미칠 가능성이 높으며, JYP 측은 향후 이러한 문제 재발 방지를 위한 대책 마련에 나서야 할 상황입니다.
-            """)
-        else:  # ASAP
-            st.markdown("""
-            데이식스 팬미팅에서 생활기록부, 금융인증서 제출을 요구하는 과도한 본인확인이 논란이 되었습니다. 팬들은 개인정보 침해라며 강하게 반발하고 있으며, 법적 문제 소지도 제기되고 있습니다. 이번 사건은 팬덤과 아티스트 간 신뢰 관계에 부정적 영향을 미칠 것으로 예상되며, JYP는 향후 유사 사건 재발 방지를 위한 대책 마련이 필요한 상황입니다.
-            """)
 
 
 def show_sns_section(investor_type):
@@ -220,14 +198,6 @@ def show_sns_section(investor_type):
 
     else:
         st.error("SNS 분석을 불러올 수 없습니다.")
-        # 임시 데이터 표시
-        percentages = {"긍정": 24.3, "부정": 61.8, "중립": 13.9}
-        st.markdown(create_horizontal_sentiment_chart(percentages), unsafe_allow_html=True)
-        st.markdown(
-            "**반응 요약**: 팬들은 과도한 본인확인 절차에 대해 강한 부정적 반응을 보이고 있습니다. 개인정보 침해 우려와 함께 팬미팅 참여의 어려움을 토로하는 의견이 다수를 차지하고 있습니다.")
-        st.markdown(
-            '<p style="font-size: 11px; color: #888; margin-top: 15px;">* 이 데이터는 팔로워와 반응 수가 많은 글을 바탕으로 수집했습니다.</p>',
-            unsafe_allow_html=True)
 
 
 def show_financial_section():
