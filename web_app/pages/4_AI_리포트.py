@@ -62,21 +62,19 @@ def show_report_header():
     """, unsafe_allow_html=True)
 
 
-@st.cache_data(ttl=3600)
+# 기존 캐시 함수들 모두 삭제하고 이것으로 교체:
+
 def load_news_analysis(investor_type):
-    """뉴스 분석 로드 (캐시됨)"""
+    """뉴스 분석 로드 (캐시 없음)"""
     return get_day6_news_summary(investor_type)
 
-
-@st.cache_data(ttl=3600)
 def load_sns_analysis(investor_type):
+    """SNS 분석 로드 (캐시 없음)"""
     news_context = "데이식스 팬미팅에서 과도한 본인확인 절차로 인한 팬들의 반발"
     return get_day6_sns_analysis(news_context, investor_type)
 
-
-@st.cache_data(ttl=3600)
 def load_financial_insight():
-    """재무 인사이트 로드 (캐시됨)"""
+    """재무 인사이트 로드 (캐시 없음)"""
     return get_jyp_financial_insight()
 
 
@@ -283,11 +281,12 @@ def show_asap_report():
     st.markdown("---")
     show_financial_section()
 
+
 def show_navigation():
     """네비게이션 버튼"""
     st.markdown("---")
 
-    col1, col2, col3, col4 = st.columns(4)  # 컬럼 4개로 변경
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         if st.button("🏠 홈으로", use_container_width=True):
@@ -302,43 +301,9 @@ def show_navigation():
             st.cache_data.clear()
             st.rerun()
 
-    with col4:
-        if st.button("💥 캐시 삭제", use_container_width=True):
-            import os
-            import glob
-            # 캐시 파일들 삭제
-            cache_files = glob.glob("data/*cache*.json")
-            for file in cache_files:
-                try:
-                    os.remove(file)
-                except:
-                    pass
-            st.cache_data.clear()
-            st.success("캐시 삭제 완료!")
-            st.rerun()
 
 def main():
     """메인 함수"""
-
-    # 배포 환경 디버깅 (임시)
-    st.write("### 🔍 디버깅 정보")
-    st.write(f"**투자자 유형**: {st.session_state.get('investor_type', 'None')}")
-    st.write(f"**선택된 이슈**: {st.session_state.get('selected_issue', {}).get('title', 'None')}")
-
-    # 캐시 파일 확인
-    import os
-    if os.path.exists('data'):
-        cache_files = [f for f in os.listdir('data') if 'cache' in f]
-        st.write(f"**캐시 파일들**: {cache_files}")
-    else:
-        st.write("**data 폴더 없음**")
-
-    # 환경 확인
-    api_key = os.getenv('CLOVA_API_KEY')
-    st.write(f"**API 키 존재**: {'✅' if api_key else '❌'}")
-
-    st.markdown("---")
-
     # 투자자 유형 및 이슈 선택 확인
     investor_type = st.session_state.get('investor_type')
     selected_issue = st.session_state.get('selected_issue')
