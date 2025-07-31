@@ -1,0 +1,5 @@
+[tool.streamlit]
+# Streamlit Cloud에서 앱을 빌드할 때 사용할 Python 버전 지정
+# 가능한 버전: "3.9", "3.10", "3.11", "3.12" 등
+# Python 3.13은 너무 최신이므로 안정적인 버전을 선택합니다.
+pythonVersion = "3.11"
