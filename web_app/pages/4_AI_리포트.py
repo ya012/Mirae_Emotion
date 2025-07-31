@@ -3,18 +3,18 @@
 AI 요약 리포트 페이지 (모바일 최적화 버전)
 """
 import streamlit as st
-import sys
-import os
+# import sys
+# import os
 from datetime import datetime
 from streamlit_extras.switch_page_button import switch_page
 
 # utils 모듈 import를 위한 경로 추가
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from web_app.utils.news_analyzer import get_day6_news_summary
-from web_app.utils.sns_analyzer import get_day6_sns_analysis
-from web_app.utils.dart_analyzer import get_jyp_financial_insight
-from web_app.utils.vote_system import show_investor_vote_section
+from utils.news_analyzer import get_day6_news_summary
+from utils.sns_analyzer import get_day6_sns_analysis
+from utils.dart_analyzer import get_jyp_financial_insight
+from utils.vote_system import show_investor_vote_section
 
 # 페이지 설정
 st.set_page_config(

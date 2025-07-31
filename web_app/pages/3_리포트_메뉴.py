@@ -90,7 +90,7 @@ def show_issue_list():
                 "query": "데이식스 본인"
             }
 
-            switch_page("AI 요약 리포트")
+            switch_page("AI 리포트")
 
     st.markdown("</div>", unsafe_allow_html=True)
 

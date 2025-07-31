@@ -3,14 +3,14 @@
 투자자 유형 테스트 페이지
 """
 import streamlit as st
-import sys
-import os
+# import sys
+# import os
 from streamlit_extras.switch_page_button import switch_page
 
 # utils 모듈 import를 위한 경로 추가
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from web_app.utils.investor_classifier import get_questions, classify_investor_type
+from utils.investor_classifier import get_questions, classify_investor_type
 
 # 페이지 설정
 st.set_page_config(
