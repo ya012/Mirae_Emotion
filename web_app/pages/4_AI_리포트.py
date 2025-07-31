@@ -4,8 +4,13 @@ AI 요약 리포트 페이지 (모바일 최적화 버전) - 원래 UI 유지
 """
 import streamlit as st
 from datetime import datetime
-from streamlit_extras.switch_page_button import switch_page
-# from utils.navigation import switch_page
+import sys
+import os
+# from streamlit_extras.switch_page_button import switch_page
+from utils.navigation import switch_page
+
+# utils 모듈 import를 위한 경로 추가
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.news_analyzer import get_day6_news_summary
 from utils.sns_analyzer import get_day6_sns_analysis
