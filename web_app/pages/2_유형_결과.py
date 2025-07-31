@@ -5,8 +5,8 @@
 import streamlit as st
 # import sys
 # import os
-# from streamlit_extras.switch_page_button import switch_page
-from utils.navigation import switch_page
+from streamlit_extras.switch_page_button import switch_page
+# from utils.navigation import switch_page
 
 # utils 모듈 import를 위한 경로 추가
 # sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

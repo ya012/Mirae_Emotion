@@ -3,8 +3,8 @@
 리포트 메뉴 페이지
 """
 import streamlit as st
-# from streamlit_extras.switch_page_button import switch_page
-from utils.navigation import switch_page
+from streamlit_extras.switch_page_button import switch_page
+# from utils.navigation import switch_page
 
 # 페이지 설정
 st.set_page_config(

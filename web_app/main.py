@@ -5,8 +5,8 @@ E:motion - 메인 앱
 import streamlit as st
 from dotenv import load_dotenv
 import os
-# from streamlit_extras.switch_page_button import switch_page
-from utils.navigation import switch_page
+from streamlit_extras.switch_page_button import switch_page
+# from utils.navigation import switch_page
 
 # 환경변수 로드
 load_dotenv()
