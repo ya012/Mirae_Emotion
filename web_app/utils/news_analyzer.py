@@ -27,16 +27,16 @@ def debug_environment():
         print(f"API 키 길이: {len(api_key)}")
         print(f"API 키 시작: {api_key[:15]}...")
 
-    # Streamlit secrets도 확인
-    if hasattr(st, 'secrets'):
-        try:
+    # Streamlit secrets 확인 (조용히)
+    try:
+        import streamlit as st
+        if hasattr(st, 'secrets') and hasattr(st.secrets, 'get'):
             secrets_key = st.secrets.get('CLOVA_API_KEY')
-            print(f"Streamlit secrets API 키: {'✅' if secrets_key else '❌'}")
             if secrets_key and not api_key:
                 api_key = secrets_key
                 print("Streamlit secrets에서 API 키 사용")
-        except:
-            print("Streamlit secrets 접근 불가")
+    except:
+        pass  # 에러 메시지 출력하지 않음
 
     return api_key
 

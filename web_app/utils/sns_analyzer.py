@@ -18,12 +18,15 @@ def get_api_key():
     """API 키 획득 (환경변수 또는 Streamlit secrets)"""
     api_key = os.getenv('CLOVA_API_KEY')
 
-    # Streamlit secrets에서도 시도
-    if not api_key and hasattr(st, 'secrets'):
-        try:
-            api_key = st.secrets.get('CLOVA_API_KEY')
-        except:
-            pass
+    # Streamlit secrets 확인 (조용히)
+    try:
+        import streamlit as st
+        if hasattr(st, 'secrets') and hasattr(st.secrets, 'get'):
+            secrets_key = st.secrets.get('CLOVA_API_KEY')
+            if secrets_key and not api_key:
+                api_key = secrets_key
+    except:
+        pass  # 에러 메시지 출력하지 않음
 
     return api_key
 
