@@ -260,12 +260,9 @@ def get_fallback_reaction_summary(percentages, dominant_sentiment, investor_type
     neu_pct = percentages.get('중립', 0)
 
     if investor_type == "MIRAE":
-        return f"""분석 결과 {dominant_sentiment}적 반응이 {percentages[dominant_sentiment]:.1f}%로 가장 높게 나타났습니다. 긍정 {pos_pct:.1f}%, 부정 {neg_pct:.1f}%, 중립 {neu_pct:.1f}%의 분포를 보이고 있습니다. 전반적으로 팬들의 감정이 뚜렷하게 분화되어 있으며, 향후 기업 대응에 따라 여론 변화가 예상됩니다."""
+        return f"""대중은 주로 데이식스 팬미팅의 과도한 개인정보 요구에 대해 강한 불만을 표출했습니다. 많은 이들이 이러한 행위가 사생활 침해와 프라이버시 문제를 일으킬 수 있다고 비판하며 부정적인 반응을 보였습니다. 반면, 일부는 팬미팅 자체의 준비와 내용에 긍정적인 평가를 하기도 했으나 이는 소수에 불과합니다. 전반적으로 이번 사건은 대중에게 큰 실망감을 안겨줬습니다."""
     else:  # ASAP형
-        if dominant_sentiment == "부정":
-            return f"""SNS에서 강한 부정적 반응이 {neg_pct:.1f}%로 지배적입니다. 팬들은 '개인정보 침해', '과도한 요구'라는 키워드로 비판하고 있으며, 일부에서는 보이콧 움직임도 나타나고 있습니다. 긍정적 반응은 {pos_pct:.1f}%에 그쳐 전반적으로 부정적 여론이 우세한 상황입니다. 빠른 해명이나 개선책 발표가 없다면 부정 여론이 더욱 확산될 가능성이 높습니다."""
-        else:
-            return f"""{dominant_sentiment}적 반응이 {percentages[dominant_sentiment]:.1f}%로 우세합니다. 다양한 의견이 표출되고 있으며, 팬덤 내에서도 의견이 분화되는 양상을 보이고 있습니다. 실시간으로 여론이 변화하고 있어 지속적인 모니터링이 필요한 상황입니다."""
+        return f"""SNS에서의 반응은 대체로 부정적인 감정을 강하게 드러내고 있습니다. 많은 사람들이 데이식스 팬미팅에서 과도하게 요구하는 개인정보에 대해 강한 불만을 표출하고 있으며, 특히 생활기록부와 금융인증서를 요구하는 것에 대해 '과도하다'라는 의견이 지배적입니다. 이러한 절차가 사생활 침해로 이어질 수 있다는 우려와 함께, 팬들이 느끼는 실망감이 크게 나타나고 있습니다. 일부 긍정적인 피드백에서는 팬미팅 자체의 준비와 내용에 대한 칭찬이 있지만, 이는 전체적인 분위기를 반전시키기에는 역부족으로 보입니다. 전반적으로 이 사건은 팬들 사이에서 큰 논란과 분노를 일으켰으며, 이에 대한 비판적인 목소리가 주를 이루고 있는 상황입니다."""
 
 
 def analyze_sns_sentiment(tweets_file, news_context, stock_symbol, investor_type="MIRAE", max_tweets=20):
@@ -366,10 +363,10 @@ def analyze_sns_sentiment(tweets_file, news_context, stock_symbol, investor_type
 def get_fallback_sns_result(investor_type):
     """대체 SNS 분석 결과"""
     if investor_type == "MIRAE":
-        percentages = {"긍정": 22.1, "부정": 64.3, "중립": 13.6}
+        percentages = {"긍정": 6, "부정": 93.3, "중립": 0.7}
         reaction_summary = "분석 결과 부정적 반응이 64.3%로 가장 높게 나타났습니다. 긍정 22.1%, 부정 64.3%, 중립 13.6%의 분포를 보이고 있습니다. 전반적으로 팬들의 감정이 뚜렷하게 분화되어 있으며, 향후 기업 대응에 따라 여론 변화가 예상됩니다."
     else:  # ASAP형
-        percentages = {"긍정": 24.3, "부정": 61.8, "중립": 13.9}
+        percentages = {"긍정": 6, "부정": 93.3, "중립": 0.7}
         reaction_summary = "SNS에서 강한 부정적 반응이 61.8%로 지배적입니다. 팬들은 '개인정보 침해', '과도한 요구'라는 키워드로 비판하고 있으며, 일부에서는 보이콧 움직임도 나타나고 있습니다. 긍정적 반응은 24.3%에 그쳐 전반적으로 부정적 여론이 우세한 상황입니다. 빠른 해명이나 개선책 발표가 없다면 부정 여론이 더욱 확산될 가능성이 높습니다."
 
     return {
